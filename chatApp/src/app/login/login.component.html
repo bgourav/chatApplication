@@ -1,0 +1,45 @@
+<hr>
+<marquee> <strong> Welcome to chat Application</strong></marquee>
+<br><br><br><br><br>
+<div class="card bg-light" *ngIf="signIn">
+    <article class="card-body mx-auto" style="max-width: 600px;">
+        <h4 class="card-title mt-3 text-center">LogIn to your Account</h4>
+      
+        <form [formGroup]="loginForm">
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+             </div>
+            <input type="email" class="form-control" placeholder="Enter Your Email" formControlName="emailid" required="" value="" />
+
+        </div> 
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input type="password" class="form-control" placeholder="Your Password" formControlName="psw" required="" value="" />
+        </div>  
+        <span class="for"><small><b><a (click)="forgetpass()">Forget Password</a></b></small></span> <br>
+                       
+        <div class="form-group">
+
+            <input type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!loginForm.valid" value="LogIn" />
+            <input type="submit" class="btn btn-primary btn-block" routerLink="/registration" value="SignUp" />
+
+        </div>     
+
+    </form>
+    </article>
+    </div> 
+
+
+
+<div class="loginfo" *ngIf="forgot">
+    <form [formGroup]="forgotpass" (ngSubmit)="forgotData()">
+      <br><br><b>Email:</b><input type="email" class="form-control" placeholder="email" formControlName="email" ><br>
+      <input type="submit" class="btnrst" value="Reset"><br>
+    </form>
+    <button value="Refresh Page" class="btnbck" onClick="window.location.reload();">Back </button> 
+
+</div>
+

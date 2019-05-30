@@ -1,0 +1,72 @@
+<app-header></app-header>
+
+
+<div class="users1" *ngIf="users">
+
+<div class="leftheader">
+    <h2>{{ loginName}}</h2>
+  </div>
+<div class="users" *ngIf="users">
+
+  <div *ngFor="let user of users">
+    
+    <div *ngIf="user.online" class="btn online" (click)="showChatRoom(user._id,user.fullname)">
+      <b>Online </b> <img src="../../assets/images/online.jpeg" height="20px" width="20px;"><br>
+      {{user.fullname}}
+
+    </div>
+
+    <div *ngIf="!user.online" class="btn offline" (click)="showChatRoom(user._id,user.fullname)">
+      <b>Offline </b> <img src="../../assets/images/offline.jpeg" height="20px" width="20px;"><br>
+      {{user.fullname}} 
+
+    </div>
+  </div>
+
+</div>
+</div>
+<div class="chatRoom" *ngIf="showroom">
+  <div class="header">
+    <h2>{{sendto}}</h2>
+  </div>
+
+  <div (mouseenter)="updateScroll()" id="fields">
+
+    <div *ngIf="messageArray">
+      <div *ngFor="let msg of messageArray">
+        <div class="msgfield1" *ngIf="msg.sendToId !== senderId && msg.messageType == 'text'">
+          <h4>{{msg.message}}</h4>
+          <span><small>{{msg.createdAt | date:'medium'}}</small> </span>
+          <div class="sendic"> <img height="30px" width="30px" src="../../assets/images/sent-tick.png"></div>
+        </div>
+        <div class="msgfield2" *ngIf="msg.sendToId == senderId && msg.messageType == 'text'">
+          <h4>{{msg.message}}</h4>
+          <span><small>{{msg.createdAt | date:'medium'}}</small> </span>
+        </div>
+        <div class="msgfield2" *ngIf="msg.sendToId == senderId && msg.messageType == 'file'">
+          <img  src="http://localhost:3000/uploads/{{msg.message}}" height="200px" width="200px">
+          <br><span><small>{{msg.messageStatus.time | date:'medium'}}</small> </span>
+        </div>
+        <div class="msgfield1" *ngIf="msg.sendToId !== senderId && msg.messageType == 'file'">
+          <img  src="http://localhost:3000/uploads/{{msg.message}}" height="200px" width="200px">
+          <br><span><small>{{msg.messageStatus.time | date:'medium'}}</small> </span>
+          <div class="sendic"> <img height="30px" width="30px" src="../../assets/images/sent-tick.png"></div>
+
+        </div>
+      </div>
+    </div>
+    <mat-progress-bar *ngIf="showbar" mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <form [formGroup]="message">
+    <input type="text" class="form-control" placeholder="Enter Message" formControlName="msg">
+    <button class="btn send" (click)="sendMessage('text')" [disabled]="!message.valid"><img src="../../assets/images/message-send.png"
+        height="30px" width="25px"></button>
+        <div class="upload-btn-wrapper">
+            <button class="btn send"><img src="../../assets/images/attach.png" height="30px" width="25px"></button>
+            <input type="file" name="myfile" (change)="onchangefile($event)" multiple> 
+          </div>
+  </form>
+  
+  
+</div>
